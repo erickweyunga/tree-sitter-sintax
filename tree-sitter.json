@@ -1,0 +1,32 @@
+{
+  "grammars": [
+    {
+      "name": "sintax",
+      "camelCase": false,
+      "scope": "source.sintax",
+      "injection-regex": "^sintax$",
+      "file-types": ["sx"]
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Tree-sitter grammar for the Sintax programming language",
+    "authors": [
+      {
+        "name": "Eric Kweyunga"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/erickweyunga/tree-sitter-sintax"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}
