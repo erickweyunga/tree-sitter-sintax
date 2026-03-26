@@ -34,9 +34,10 @@ module.exports = grammar({
     use_statement: ($) =>
       seq("use", field("path", choice($.string, $.single_string))),
 
-    // fn (params) [return_type] name:
+    // [pub] fn (params) [return_type] name:
     function_definition: ($) =>
       seq(
+        optional("pub"),
         "fn",
         "(",
         optional($.parameter_list),
@@ -274,7 +275,7 @@ module.exports = grammar({
 
     interpolation: ($) => seq("{", $.identifier, "}"),
 
-    single_string: ($) => seq("'", optional(/[^']*/), "'"),
+    single_string: ($) => seq("'", optional(repeat(choice(/[^'\\]+/, /\\[\\']/))), "'"),
 
     identifier: ($) => /[a-zA-Z_]\w*/,
 

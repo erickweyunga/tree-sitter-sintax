@@ -145,6 +145,83 @@ Comment
   (comment))
 
 ================
+Public function
+================
+
+pub fn (str s) str shout:
+    return s.upper()
+
+---
+
+(source_file
+  (function_definition
+    (parameter_list
+      (parameter
+        (typed_parameter type: (type) name: (identifier))))
+    return_type: (type)
+    name: (identifier)
+    body: (block
+      (return_statement
+        (method_call
+          object: (identifier)
+          method: (identifier))))))
+
+================
+Error handling
+================
+
+result = error("bad")
+if err(result):
+    >> result
+
+---
+
+(source_file
+  (assignment
+    name: (identifier)
+    value: (call_expression function: (identifier) (argument_list (string (string_content)))))
+  (if_statement
+    condition: (call_expression function: (identifier) (argument_list (identifier)))
+    body: (block (print_statement (identifier)))))
+
+================
+String interpolation
+================
+
+name = "Eric"
+>> "Hello, {name}!"
+
+---
+
+(source_file
+  (assignment
+    name: (identifier)
+    value: (string (string_content)))
+  (print_statement
+    (string
+      (string_content)
+      (interpolation (identifier))
+      (string_content))))
+
+================
+Functional methods
+================
+
+>> [1, 2, 3].map(fn(x) -> x * 2)
+
+---
+
+(source_file
+  (print_statement
+    (method_call
+      object: (list_literal (number) (number) (number))
+      method: (identifier)
+      (argument_list
+        (lambda
+          (identifier)
+          body: (multiplication (identifier) (number)))))))
+
+================
 Match/case
 ================
 
