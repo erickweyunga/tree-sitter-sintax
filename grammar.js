@@ -35,7 +35,7 @@ module.exports = grammar({
     use_statement: ($) =>
       seq("use", field("path", choice($.string, $.single_string))),
 
-    // [pub] fn (params) [return_type] name:
+    // [pub] fn (params) return_type name:
     function_definition: ($) =>
       seq(
         optional("pub"),
@@ -43,7 +43,7 @@ module.exports = grammar({
         "(",
         optional($.parameter_list),
         ")",
-        optional(field("return_type", $.type)),
+        field("return_type", $.return_type),
         field("name", $.identifier),
         ":",
         field("body", $.block)
@@ -60,7 +60,10 @@ module.exports = grammar({
     typed_parameter: ($) =>
       seq(field("type", $.type), field("name", $.identifier)),
 
-    type: ($) => choice("num", "str", "bool", "list", "dict"),
+    // Single type or union type (num | str | bool)
+    return_type: ($) => seq($.type, repeat(seq("|", $.type))),
+
+    type: ($) => choice("num", "str", "bool", "list", "dict", "void", "fn"),
 
     block: ($) => prec.right(repeat1($._statement)),
 

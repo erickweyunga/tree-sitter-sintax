@@ -53,7 +53,7 @@ fn (num a, num b) num add:
         (typed_parameter type: (type) name: (identifier)))
       (parameter
         (typed_parameter type: (type) name: (identifier))))
-    return_type: (type)
+    return_type: (return_type (type))
     name: (identifier)
     body: (block
       (return_statement
@@ -158,13 +158,76 @@ pub fn (str s) str shout:
     (parameter_list
       (parameter
         (typed_parameter type: (type) name: (identifier))))
-    return_type: (type)
+    return_type: (return_type (type))
     name: (identifier)
     body: (block
       (return_statement
         (method_call
           object: (identifier)
           method: (identifier))))))
+
+================
+Void function
+================
+
+fn (str msg) void log:
+    >> msg
+
+---
+
+(source_file
+  (function_definition
+    (parameter_list
+      (parameter
+        (typed_parameter type: (type) name: (identifier))))
+    return_type: (return_type (type))
+    name: (identifier)
+    body: (block (print_statement (identifier)))))
+
+================
+Function returning function
+================
+
+fn () fn make_counter:
+    count = 0
+    fn () num inc:
+        count = count + 1
+        return count
+    return inc
+
+---
+
+(source_file
+  (function_definition
+    return_type: (return_type (type))
+    name: (identifier)
+    body: (block
+      (assignment name: (identifier) value: (number))
+      (function_definition
+        return_type: (return_type (type))
+        name: (identifier)
+        body: (block
+          (assignment name: (identifier) value: (addition (identifier) (number)))
+          (return_statement (identifier))
+          (return_statement (identifier)))))))
+
+================
+Union return type
+================
+
+fn (str s) dict | list | str | num | bool parse:
+    return s
+
+---
+
+(source_file
+  (function_definition
+    (parameter_list
+      (parameter
+        (typed_parameter type: (type) name: (identifier))))
+    return_type: (return_type (type) (type) (type) (type) (type))
+    name: (identifier)
+    body: (block (return_statement (identifier)))))
 
 ================
 Error handling
