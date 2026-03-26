@@ -185,6 +185,21 @@ if err(result):
     body: (block (print_statement (identifier)))))
 
 ================
+Catch statement
+================
+
+catch result = divide(10, 0):
+    >> result
+
+---
+
+(source_file
+  (catch_statement
+    name: (identifier)
+    value: (call_expression function: (identifier) (argument_list (number) (number)))
+    body: (block (print_statement (identifier)))))
+
+================
 String interpolation
 ================
 

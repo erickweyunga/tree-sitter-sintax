@@ -18,6 +18,7 @@ module.exports = grammar({
         $.use_statement,
         $.function_definition,
         $.if_statement,
+        $.catch_statement,
         $.while_statement,
         $.for_statement,
         $.match_statement,
@@ -74,6 +75,17 @@ module.exports = grammar({
       )),
 
     else_clause: ($) => seq("else", ":", field("body", $.block)),
+
+    // catch name = expr:
+    catch_statement: ($) =>
+      seq(
+        "catch",
+        field("name", $.identifier),
+        "=",
+        field("value", $._expression),
+        ":",
+        field("body", $.block)
+      ),
 
     // while condition:
     while_statement: ($) =>
